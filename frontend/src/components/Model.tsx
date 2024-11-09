@@ -4,6 +4,7 @@ import { BASE_URL } from "@/utils/constant";
 import axios from "axios";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
+import { toast } from "react-toastify";
 
 interface EditUserModalProps {
   user: User;
@@ -28,8 +29,9 @@ const Model: React.FC<EditUserModalProps> = ({ user, onClose, onSave }) => {
       onSave(updatedUser); // Update user in parent component
       setLoading(false);
       onClose(); // Close the modal after saving
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
+      toast.error(error?.message);
       console.error("Error updating user:", error);
     }
   };

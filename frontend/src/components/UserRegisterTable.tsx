@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Table,
   TableBody,
@@ -14,6 +15,7 @@ import Model from "./Model";
 import { Button } from "./ui/button";
 import { User } from "@/context/AuthProvider";
 import { BASE_URL } from "@/utils/constant";
+import { toast } from "react-toastify";
 
 export function UserTable() {
   const [users, setUsers] = useState<User[]>([]);
@@ -29,8 +31,9 @@ export function UserTable() {
         });
         console.log(response.data);
         setUsers(response.data);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error fetching users:", error);
+        toast.error(error?.message);
       } finally {
         setLoading(false); // Set loading to false after data is fetched
       }

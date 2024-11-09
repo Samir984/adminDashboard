@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -26,8 +27,9 @@ export default function Login() {
       setTimeout(() => {
         navigate("/");
       }, 1000);
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false);
+      toast.error(err?.message);
       console.log(err);
     }
 
