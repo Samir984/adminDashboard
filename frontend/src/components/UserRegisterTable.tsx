@@ -19,7 +19,7 @@ export function UserTable() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -27,6 +27,7 @@ export function UserTable() {
         const response = await axios.get(`${BASE_URL}/users/`, {
           withCredentials: true,
         });
+        console.log(response.data);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -82,14 +83,14 @@ export function UserTable() {
         </TableHeader>
         <TableBody>
           {loading
-            ? Array.from({ length: 5 }).map((_, index) => (
+            ? Array.from({ length: 6 }).map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell className="animate-bounce bg-gray-300 h-8" />
-                  <TableCell className="animate-bounce bg-gray-300 h-8" />
-                  <TableCell className="animate-bounce bg-gray-300 h-8" />
-                  <TableCell className="animate-bounce bg-gray-300 h-8" />
-                  <TableCell className="animate-bounce bg-gray-300 h-8" />
-                  <TableCell className="animate-bounce bg-gray-300 h-8" />
+                  <TableCell className="animate-pulse bg-gray-300 h-12" />
+                  <TableCell className="animate-pulse bg-gray-300 h-12" />
+                  <TableCell className="animate-pulse bg-gray-300 h-12" />
+                  <TableCell className="animate-pulse bg-gray-300 h-12" />
+                  <TableCell className="animate-pulse bg-gray-300 h-12" />
+                  <TableCell className="animate-pulse bg-gray-300 h-12" />
                 </TableRow>
               ))
             : users.map((user) => (

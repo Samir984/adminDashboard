@@ -3,6 +3,7 @@ import { User } from "@/context/AuthProvider";
 import { BASE_URL } from "@/utils/constant";
 import axios from "axios";
 import React, { useState } from "react";
+import { Button } from "./ui/button";
 
 interface EditUserModalProps {
   user: User;
@@ -15,17 +16,20 @@ const Model: React.FC<EditUserModalProps> = ({ user, onClose, onSave }) => {
   const [email, setEmail] = useState(user.email);
   const [isActive, setIsActive] = useState(user.isActive);
   const [role, setRole] = useState(user.role);
+  const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
     const updatedUser = { ...user, fullName, email, isActive, role };
-
+    setLoading(true);
     try {
       await axios.put(`${BASE_URL}/users/${user._id}`, updatedUser, {
         withCredentials: true,
       });
       onSave(updatedUser); // Update user in parent component
+      setLoading(false);
       onClose(); // Close the modal after saving
     } catch (error) {
+      setLoading(false);
       console.error("Error updating user:", error);
     }
   };
@@ -73,15 +77,14 @@ const Model: React.FC<EditUserModalProps> = ({ user, onClose, onSave }) => {
           />
         </label>
         <div className="flex justify-end space-x-2">
-          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded">
-            Cancel
-          </button>
-          <button
+          <Button onClick={onClose}>Cancel</Button>
+          <Button
             onClick={handleSave}
             className="px-4 py-2 bg-blue-500 text-white rounded"
+            disabled={loading}
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </div>

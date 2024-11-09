@@ -40,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
+    console.log("effect isloogedd");
     const state = isLoggedIn == true ? "yes" : "no";
     localStorage.setItem("isLoggedIn", state);
   }, [isLoggedIn]);

@@ -1,4 +1,4 @@
-import { UserTable } from "@/components/UserTable";
+import { UserTable } from "@/components/UserRegisterTable";
 
 export default function Dashboard() {
   return (

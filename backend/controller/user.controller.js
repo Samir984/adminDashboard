@@ -114,7 +114,7 @@ const getAllUser = async (req, res) => {
       return res.status(403).json({ message: "Access Denied: Admins Only!" });
     }
 
-    const users = await User.find({});
+    const users = await User.find({}).select("-password");
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "Error fetching users", error });

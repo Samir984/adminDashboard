@@ -36,7 +36,7 @@ const verifyJwt = async (req, res, next) => {
     });
 
     // Check if the user is blocked
-    if (user.isBlock) {
+    if (!user.isActive) {
       return res
         .status(403)
         .json({ message: "Your account is blocked due to some reason" });
