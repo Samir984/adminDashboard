@@ -33,8 +33,16 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    const value = localStorage.getItem("isLoggedIn");
+    return value == "yes" ? true : false;
+  });
   const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const state = isLoggedIn == true ? "yes" : "no";
+    localStorage.setItem("isLoggedIn", state);
+  }, [isLoggedIn]);
 
   console.log(isLoggedIn);
   useEffect(() => {
