@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  web:
+    build: "./frontend"
+    # not this is not need in react as the code react code in execute from client browser
+    # environment:
+    #   - VITE_BACKEND_URL=http://api:8080/api # Removed quotes to avoid YAML parsing issues
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+    volumes:
+      - ./frontend:/app
+    networks:
+      - app-network
+
+  api:
+    build: "./backend"
+    ports:
+      - 8080:8080
+    environment:
+      - DB_URL=mongodb://mongo:27017/app
+      - ACCESS_TOKEN_SECRET=mysecretkaljs
+      - ACCESS_TOKEN_EXPIRY=6hr
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - v1:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - app-network
+
+volumes:
+  v1:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

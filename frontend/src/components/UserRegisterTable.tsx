@@ -29,7 +29,7 @@ export function UserTable() {
         const response = await axios.get(`${BASE_URL}/users/`, {
           withCredentials: true,
         });
-        console.log(response.data);
+        console.log(response.data, `${BASE_URL}/users/`);
         setUsers(response.data);
       } catch (error: any) {
         console.error("Error fetching users:", error);

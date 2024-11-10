@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import axios from "axios";
+import { BASE_URL } from "@/utils/constant";
 
 // types/AuthTypes.ts
 export interface User {
@@ -23,8 +24,6 @@ export interface AuthContextType {
   login: (email: string, password: string) => Promise<User>;
   logout: () => Promise<void>;
 }
-
-const BASE_URL = "http://localhost:8080/api"; // replace with your actual base URL
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -53,6 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const response = await axios.get<User>(`${BASE_URL}/users/me`, {
           withCredentials: true,
         });
+        console.log(response, `${BASE_URL}/users/me`);
         setUser(response.data);
         setIsLoggedIn(true);
       } catch (error) {
@@ -75,6 +75,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         },
         { withCredentials: true }
       );
+      console.log(response, `${BASE_URL}/users/login`);
       setUser(response.data);
       setIsLoggedIn(true);
       return response.data;

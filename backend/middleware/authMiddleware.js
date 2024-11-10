@@ -24,6 +24,7 @@ const verifyJwt = async (req, res, next) => {
     );
 
     // Find user by ID in the decoded token
+    console.log(accessToken, decodedToken, "\n\n\n");
     const user = await User.findById(decodedToken?._id).select("-password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });

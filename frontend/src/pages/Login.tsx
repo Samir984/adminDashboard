@@ -20,8 +20,8 @@ export default function Login() {
     console.log(email, password);
     try {
       setLoading(true);
-      const res = await login(email, password);
-      console.log(res);
+      await login(email, password);
+
       setLoading(false);
       toast.success("login successfull");
       setTimeout(() => {
